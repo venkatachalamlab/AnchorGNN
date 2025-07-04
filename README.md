@@ -16,6 +16,14 @@ The pipeline begins with 3D segmentation using [StarDist](https://github.com/sta
 - Graph Attentional construction and embedding for node matching (edge features)
 - Training flow designed for small-scale annotated biomedical datasets
 
+### Installation
+
+To install all required dependencies, run:
+
+```bash
+pip install -r requirements.txt
+```
+
 ### Project Structure
 
 ````markdown
@@ -45,6 +53,8 @@ The pipeline begins with 3D segmentation using [StarDist](https://github.com/sta
 - `Segmentation/`: Contains segmentation routines and manual labeling tools using StarDist and a custom Tkinter GUI.
 - `Eval/`: Jupyter notebooks for training analysis, plotting accuracy metrics, and visualizing matching outputs.
   - To produce neuronal activity traces, see [`Eval/Traces.ipynb`](./Eval/Traces.ipynb).
+
+
 
 ### Files of Interest
 
