@@ -81,11 +81,10 @@ python test.py --config test.yaml
 
 ## 🔍 Evaluation Highlights
 
-- Mean accuracy improves by **~20%** with GNN-based anchors.
+- Mean accuracy improves by **~10%** with GNN-based anchors.
 - Ablation study included for:
   - Feature sets (node vs node+edge)
   - Attention heads (1 vs 8)
-  - Annotated frame count (1/3/5/10)
 - Activity traces from GNN-refined tracks match manual annotation more closely than baseline.
 
 ---
