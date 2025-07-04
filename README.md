@@ -1,73 +1,105 @@
-# Matching Anchor
+# AnchorGNN: 3D Neuron Tracking in *C. elegans*
 
-This project implements a 3D neuron tracking pipeline for *C. elegans*, using image segmentation, feature extraction, and graph-based matching. It integrates deep learning with traditional optimization to align neurons across timepoints despite deformation, occlusion, or noise. Developed for high-resolution biological imaging tasks, it's adaptable to other segmentation-to-tracking workflows.
+This repository implements a complete pipeline for 3D neuron tracking in *C. elegans* using automated segmentation, graph-based feature extraction, and a Graph Neural Network (GNN) for anchor neuron identification. The output anchors are integrated into the ZephIR tracking framework for enhanced non-rigid neuron tracking.
 
-### Description
+## 📜 Overview
 
-The pipeline begins with 3D segmentation using [StarDist](https://github.com/stardist/stardist), extracts node and edge features from identified neurons, and applies a [Graph Neural Network (GNN)](https://distill.pub/2021/gnn-intro/) to match neuron pairs across frames. A custom energy-minimization framework (ZephIR) then aligns neuron identities over time, using anchors to constrain optimization.
+Tracking neurons in deforming *C. elegans* brains is challenging due to nonlinear body motion, signal bleed-over, and imaging artifacts. This project addresses these issues by:
 
-### Techniques of Interest
+- Segmenting nuclei from 3D fluorescent microscopy images using StarDist.
+- Constructing neuron graphs using node and edge features derived from the segmented volumes.
+- Training a GNN model to match neurons across timepoints.
+- Using high-confidence matched anchor neurons to guide ZephIR-based nonrigid tracking.
 
-- 3D segmentation using StarDist-3D (radial polyhedron modeling)
-- Neuron motion modeling with elastic spring systems and energy minimization
-- Sparse field interpolation to propagate anchor constraints across a 3D volume
-- YAML-based config parsing for training and evaluation workflows
-- Manual labeling GUI see [Segmentation_GUI](https://github.com/venkatachalamlab/Segmentation_GUI) for implementation reference
-- Graph Attentional construction and embedding for node matching (edge features)
-- Training flow designed for small-scale annotated biomedical datasets
 
-### Installation
 
-To install all required dependencies, run:
+---
+
+## 📁 Project Structure
+
+```
+Matching_anchor/
+│
+├── MatchPartial/                   # GNN training and testing
+│   ├── parameters.py               # Configuration and constants
+│   ├── model_sim_EGAT_v2_h8.py    # Edge-attention GNN architecture
+│   ├── utilize_func.py            # Feature extraction and graph construction
+│   ├── eval_prediction_func.py    # Evaluation and matching functions
+│   └── ...
+│
+├── segmentation/                  # Segmentation pipeline with [StarDist](https://github.com/stardist/stardist)
+│   └── segmentation_pipeline.py
+│
+├── Eval/                          # Downstream evaluation
+│   └── traces.ipynb               # Extract neuronal activity from tracks
+│
+├── GUI/                           # Manual annotation interface [Segmentation_GUI](https://github.com/venkatachalamlab/Segmentation_GUI)
+│   └── annotation_gui.py
+│
+├── train.py                       # Entry point to train GNN
+├── test.py                        # Run inference on new data
+├── requirements.txt               # Python dependencies
+└── README.md                      # This file
+```
+
+---
+
+## 🧠 Key Features
+
+- **StarDist segmentation**: Fast and accurate detection of 2D/3D fluorescent nuclei.
+- **Graph construction**: Nodes represent neurons, edges represent spatial proximity and orientation.
+- **GNN matching**: Graph attention model trained to match neuron identities across frames.
+- **Anchor-based ZephIR registration**: Guides deformable alignment with partial annotations.
+- **Manual labeling GUI**: Simplifies annotation and review of neuron centroids.
+- **Activity trace extraction**: Extracts calcium signal from tracked coordinates.
+
+---
+
+## 🖥️ Installation
 
 ```bash
+git clone https://github.com/venkatachalamlab/AnchorGNN.git
+cd AnchorGNN
 pip install -r requirements.txt
 ```
 
-### Project Structure
+---
 
-````markdown
-.
-├── train.py
-├── test.py
-├── train.yaml
-├── test.yaml
-├── MatchPartial/              # GNN model code for matching anchor neurons
-│   ├── models/
-│   ├── utils/
-│   └── ...
-├── Segmentation/              # StarDist-based segmentation pipeline and preprocessing
-│   ├── data/
-│   ├── training/
-│   └── labeling_gui/
-├── Eval/                      # Evaluation, visualization and traces notebooks
-│   ├── paper_plots/
-│   ├── __pycache__/
-│   └── *.ipynb
-└── README.md
-````
+## 🚀 Usage
 
-#### Notable Directories
+### Train the GNN
+```bash
+python train.py --config train.yaml
+```
 
-- `MatchPartial/`: Contains all GNN model architecture, feature extraction, and training logic for neuron linking.
-- `Segmentation/`: Contains segmentation routines and manual labeling tools using StarDist and a custom Tkinter GUI.
-- `Eval/`: Jupyter notebooks for training analysis, plotting accuracy metrics, and visualizing matching outputs.
-  - To produce neuronal activity traces, see [`Eval/Traces.ipynb`](./Eval/Traces.ipynb).
+### Test a pretrained model
+```bash
+python test.py --config test.yaml
+```
+### To produce neuronal activity traces, see [`Eval/Traces.ipynb`](./Eval/Traces.ipynb).
+---
 
+## 🔍 Evaluation Highlights
 
+- Mean accuracy improves by **~20%** with GNN-based anchors.
+- Ablation study included for:
+  - Feature sets (node vs node+edge)
+  - Attention heads (1 vs 8)
+  - Annotated frame count (1/3/5/10)
+- Activity traces from GNN-refined tracks match manual annotation more closely than baseline.
 
-### Files of Interest
+---
 
-- [`train.py`](./train.py): Trains the GNN model using a configuration file.  
-  **Run with:**  
-  ```bash
-  python train.py --config train.yaml
-  ```
+## 🔒 License
 
-- [`test.py`](./test.py): Tests trained model weights on a configured dataset.  
-  **Run with:**  
-  ```bash
-  python test.py --config test.yaml
-  ```
+This project is licensed under the [MIT License](LICENSE).
 
-- [`train.yaml`](./train.yaml), [`test.yaml`](./test.yaml): Define all paths, hyperparameters, and model options for training and testing.
+---
+
+## ✍️ Citation
+
+If you use this code, please cite:
+
+> Hang Deng, James Yu, Vivek Venkatachalam. *Neuron tracking in C. elegans through automated anchor neuron localization and segmentation.*
+>
+> [SPIE Conference Paper](https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12857/128570H/Neuron-tracking-in-C-elegans-through-automated-anchor-neuron-localization/10.1117/12.3001982.short)
