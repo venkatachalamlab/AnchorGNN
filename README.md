@@ -80,8 +80,6 @@ python test.py --config test.yaml
 ---
 
 ## 🔍 Evaluation Highlights
-
-- Mean accuracy improves by **~10%** with GNN-based anchors.
 - Ablation study included for:
   - Feature sets (node vs node+edge)
   - Attention heads (1 vs 8)
