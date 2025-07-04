@@ -1,0 +1,14 @@
+zoom_factor: 2
+match_method: "1"
+folder_path: dataset/ZM9624_github
+save_folder: dataset/ZM9624_github
+threshold: 0.7
+sim_threshold: 0.85
+weights_path: GNN_weights/train_rawseg.pt
+train_val: eval
+centroid_ref: null
+extension_length: null
+ratio: null
+nearby_search_num: 5
+model_path: ZM9624_github/model/
+code_dir: Matching_anchor ## the fold_path to the Matching_anchor

@@ -1,0 +1,14 @@
+zoom_factor: 2            ## Default Upsampling images to  segment cells   
+match_method: "1"           ## Defalult recommend linking method is 1, option:1,2,3 
+folder_path: dataset/ZM9624_github/  ## loading datasets
+save_folder: dataset/ZM9624_github/  ## ususally the same as the loading datastets 'folder_path'
+threshold: 0.5              # Threshold that is regarded as positive from the linking probability in the training
+sim_threshold: null         # Defalult use null for None in the training
+weights_path: null          # Defalult use null for None in the training
+train_val: train           ## Defalult use train will require the ground truth tracking file annotation.h5 to specify the coordiantes and worldline_id (cell ID)
+centroid_ref: null         # Defalult use null for None defualt for not applying mask
+extension_length: null     # Defalult use null for None defualt for not applying mask
+ratio: 0.1   ## Defalult weights to balance the binary output of linking probabality, option:0.1,0.2,..1
+nearby_search_num: 5   ## Defalult number of nearby cells that are considered as edges
+model_path: ZM9624_github/model/
+code_dir: Matching_anchor ## the fold_path to the Matching_anchor
