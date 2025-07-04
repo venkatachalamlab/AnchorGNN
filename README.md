@@ -12,8 +12,8 @@ The pipeline begins with 3D segmentation using [StarDist](https://github.com/sta
 - Neuron motion modeling with elastic spring systems and energy minimization
 - Sparse field interpolation to propagate anchor constraints across a 3D volume
 - YAML-based config parsing for training and evaluation workflows
-- Manual labeling GUI using [Tkinter](https://docs.python.org/3/library/tkinter.html)
-- Graph construction and embedding for node matching (edge features + [node2vec](https://snap.stanford.edu/node2vec/))
+- Manual labeling GUI see [Segmentation_GUI](https://github.com/venkatachalamlab/Segmentation_GUI) for implementation reference
+- Graph Attentional construction and embedding for node matching (edge features)
 - Training flow designed for small-scale annotated biomedical datasets
 
 ### Technologies of Note
