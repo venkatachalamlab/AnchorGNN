@@ -16,16 +16,6 @@ The pipeline begins with 3D segmentation using [StarDist](https://github.com/sta
 - Graph Attentional construction and embedding for node matching (edge features)
 - Training flow designed for small-scale annotated biomedical datasets
 
-### Technologies of Note
-
-- [StarDist 3D](https://github.com/stardist/stardist): star-convex polygon segmentation, optimized for nuclei
-- [PyTorch](https://pytorch.org/): model training and inference
-- [PyYAML](https://pyyaml.org/): structured configuration loading
-- [Matplotlib](https://matplotlib.org/): visual analysis and plot generation
-- [Tkinter](https://docs.python.org/3/library/tkinter.html): GUI for manual annotation
-- [Jupyter](https://jupyter.org/): notebooks for evaluation and experimentation
-- Fonts (used in plots): likely [DejaVu Sans](https://dejavu-fonts.github.io/), default in Matplotlib
-
 ### Project Structure
 
 ````markdown
