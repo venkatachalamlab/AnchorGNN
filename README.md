@@ -34,7 +34,15 @@ The pipeline begins with 3D segmentation using [StarDist](https://github.com/sta
 ├── test.py
 ├── train.yaml
 ├── test.yaml
-├── Eval/
+├── MatchPartial/              # GNN model code for matching anchor neurons
+│   ├── models/
+│   ├── utils/
+│   └── ...
+├── Segmentation/              # StarDist-based segmentation pipeline and preprocessing
+│   ├── data/
+│   ├── training/
+│   └── labeling_gui/
+├── Eval/                      # Evaluation, visualization and traces notebooks
 │   ├── paper_plots/
 │   ├── __pycache__/
 │   └── *.ipynb
@@ -43,11 +51,23 @@ The pipeline begins with 3D segmentation using [StarDist](https://github.com/sta
 
 #### Notable Directories
 
-- `Eval/`: Contains Jupyter notebooks for training history, performance evaluation, and paper plots.
-- `Eval/paper_plots/`: Includes evaluation images such as accuracy curves and training dynamics.
+- `MatchPartial/`: Contains all GNN model architecture, feature extraction, and training logic for neuron linking.
+- `Segmentation/`: Contains segmentation routines and manual labeling tools using StarDist and a custom Tkinter GUI.
+- `Eval/`: Jupyter notebooks for training analysis, plotting accuracy metrics, and visualizing matching outputs.
+  - To produce neuronal activity traces, see [`Eval/Traces.ipynb`](./Eval/Traces.ipynb).
 
 ### Files of Interest
 
-- [`train.py`](./train.py): Launches training of the GNN model with configurable parameters.
-- [`test.py`](./test.py): Evaluates the model, generating matches between frames.
-- [`train.yaml`](./train.yaml), [`test.yaml`](./test.yaml): Define hyperparameters, paths, and model settings.
+- [`train.py`](./train.py): Trains the GNN model using a configuration file.  
+  **Run with:**  
+  ```bash
+  python train.py --config train.yaml
+  ```
+
+- [`test.py`](./test.py): Tests trained model weights on a configured dataset.  
+  **Run with:**  
+  ```bash
+  python test.py --config test.yaml
+  ```
+
+- [`train.yaml`](./train.yaml), [`test.yaml`](./test.yaml): Define all paths, hyperparameters, and model options for training and testing.
