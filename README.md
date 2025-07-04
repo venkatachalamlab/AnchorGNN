@@ -23,17 +23,17 @@ Matching_anchor/
 ├── MatchPartial/                   # GNN training and testing
 │   ├── parameters.py               # Configuration and constants
 │   ├── model_sim_EGAT_v2_h8.py    # Edge-attention GNN architecture
-│   ├── utilize_func.py            # Feature extraction and graph construction
+│   ├── Seg2graph.py            # Feature extraction and graph construction
 │   ├── eval_prediction_func.py    # Evaluation and matching functions
 │   └── ...
 │
-├── segmentation/                  # Segmentation pipeline with [StarDist](https://github.com/stardist/stardist)
-│   └── segmentation_pipeline.py
+├── Segmentation/                  # Segmentation pipeline with StarDist
+│   └── Video_seg.py
 │
 ├── Eval/                          # Downstream evaluation
 │   └── traces.ipynb               # Extract neuronal activity from tracks
 │
-├── GUI/                           # Manual annotation interface [Segmentation_GUI](https://github.com/venkatachalamlab/Segmentation_GUI)
+├── GUI/                           # Manual annotation interface https://github.com/venkatachalamlab/Segmentation_GUI
 │   └── annotation_gui.py
 │
 ├── train.py                       # Entry point to train GNN
@@ -46,11 +46,11 @@ Matching_anchor/
 
 ## 🧠 Key Features
 
-- **StarDist segmentation**: Fast and accurate detection of 2D/3D fluorescent nuclei.
+- **StarDist segmentation**: Fast and accurate detection of 2D/3D fluorescent nuclei. [StarDist](https://github.com/stardist/stardist)
 - **Graph construction**: Nodes represent neurons, edges represent spatial proximity and orientation.
 - **GNN matching**: Graph attention model trained to match neuron identities across frames.
 - **Anchor-based ZephIR registration**: Guides deformable alignment with partial annotations.
-- **Manual labeling GUI**: Simplifies annotation and review of neuron centroids.
+- **Manual labeling GUI**: Simplifies annotation and review of neuron centroids.[Segmentation_GUI](https://github.com/venkatachalamlab/Segmentation_GUI)
 - **Activity trace extraction**: Extracts calcium signal from tracked coordinates.
 
 ---
