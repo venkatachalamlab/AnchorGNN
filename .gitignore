@@ -1,0 +1,26 @@
+# Python Cache
+__pycache__/
+*.pyc
+
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Spotlight
+.Spotlight-V100
+
+# Icon?
+.Icon?
+
+# Trash
+.Trashes
+
+# macOS indexing
+._*
+
+# macOS folder attributes
+.metadata_never_index
+
+# macOS volume info
+.VolumeIcon.icns
