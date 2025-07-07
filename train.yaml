@@ -17,7 +17,7 @@ centroid_ref: null           # Use null (None) to disable centroid masking
 extension_length: null       # Use null (None) to disable mask extension
 
 ratio: 0.1                   # Class balancing weight for linking probability; valid values: 0.1–1.0
-nearby_search_num: 5         # Number of nearest neighbors considered as edges
+nearby_search_num: 5         # Number of nearest neighbors to consider as candidate
 
 model_path: ZM9624_github/model/  # Path to save or load model weights
 code_dir: Matching_anchor         # Path to the Matching_anchor code directory
