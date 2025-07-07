@@ -18,7 +18,7 @@ centroid_ref: null                       # Null disables centroid-based masking
 extension_length: null                   # Null disables mask extension
 ratio: null                              # Null disables class weighting
 
-nearby_search_num: 5                     # Number of nearest neighbors used as edges
+nearby_search_num: 5                     # Number of nearest neighbors to consider as candidate
 
 model_path: ZM9624_github/model/         # Directory for saving/loading model outputs
 code_dir: Matching_anchor                # Path to Matching_anchor code directory
