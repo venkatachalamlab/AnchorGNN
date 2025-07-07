@@ -1,14 +1,24 @@
-zoom_factor: 2
-match_method: "1"
-folder_path: dataset/ZM9624_github
-save_folder: dataset/ZM9624_github
-threshold: 0.7
-sim_threshold: 0.85
-weights_path: GNN_weights/train_rawseg.pt
-train_val: eval
-centroid_ref: null
-extension_length: null
-ratio: null
-nearby_search_num: 5
-model_path: ZM9624_github/model/
-code_dir: Matching_anchor ## the fold_path to the Matching_anchor
+zoom_factor: 2                           # Upsampling factor for input images
+
+match_method: "1"                        # Matching strategy:
+                                        # "1" - For each child frame, choose the most similar annotated frame as its parent (recommended)
+                                        # "2" - Use the same annotated frame as parent for all child frames
+                                        # "3" - Match against all annotated frames; keep consensus matches and unique orphan matches
+
+folder_path: dataset/ZM9624_github       # Path to input dataset
+save_folder: dataset/ZM9624_github       # Path to save outputs (usually same as folder_path)
+
+threshold: 0.7                           # Linking probability threshold for positive match
+sim_threshold: 0.85                      # Similarity threshold for filtering candidate matches
+weights_path: GNN_weights/train_rawseg.pt  # Path to pretrained GNN weights
+
+train_val: eval                          # Mode: 'train' requires ground truth, 'eval' for inference only
+
+centroid_ref: null                       # Null disables centroid-based masking
+extension_length: null                   # Null disables mask extension
+ratio: null                              # Null disables class weighting
+
+nearby_search_num: 5                     # Number of nearest neighbors used as edges
+
+model_path: ZM9624_github/model/         # Directory for saving/loading model outputs
+code_dir: Matching_anchor                # Path to Matching_anchor code directory
