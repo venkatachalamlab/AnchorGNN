@@ -1,14 +1,23 @@
-zoom_factor: 2            ## Default Upsampling images to  segment cells   
-match_method: "1"           ## Defalult recommend linking method is 1, option:1,2,3 
-folder_path: dataset/ZM9624_github/  ## loading datasets
-save_folder: dataset/ZM9624_github/  ## ususally the same as the loading datastets 'folder_path'
-threshold: 0.5              # Threshold that is regarded as positive from the linking probability in the training
-sim_threshold: null         # Defalult use null for None in the training
-weights_path: null          # Defalult use null for None in the training
-train_val: train           ## Defalult use train will require the ground truth tracking file annotation.h5 to specify the coordiantes and worldline_id (cell ID)
-centroid_ref: null         # Defalult use null for None defualt for not applying mask
-extension_length: null     # Defalult use null for None defualt for not applying mask
-ratio: 0.1   ## Defalult weights to balance the binary output of linking probabality, option:0.1,0.2,..1
-nearby_search_num: 5   ## Defalult number of nearby cells that are considered as edges
-model_path: ZM9624_github/model/
-code_dir: Matching_anchor ## the fold_path to the Matching_anchor
+zoom_factor: 2               # Default upsampling factor for segmenting cells
+match_method: "1"           # Matching strategy: 
+                            # "1" - For each child frame, choose the most similar annotated frame as its parent (recommended)
+                            # "2" - Use the same annotated frame as parent for all child frames
+                            # "3" - Match against all annotated frames; keep consensus matches and unique orphan matches
+
+folder_path: dataset/ZM9624_github/   # Path to load the dataset
+save_folder: dataset/ZM9624_github/   # Path to save outputs (usually same as folder_path)
+
+threshold: 0.5               # Linking probability threshold for positive match
+sim_threshold: null          # Use null (None) by default during training
+weights_path: null           # Use null (None) by default during training
+
+train_val: train             # Use "train" to require ground truth in annotation.h5 (coordinates and worldline_id)
+
+centroid_ref: null           # Use null (None) to disable centroid masking
+extension_length: null       # Use null (None) to disable mask extension
+
+ratio: 0.1                   # Class balancing weight for linking probability; valid values: 0.1–1.0
+nearby_search_num: 5         # Number of nearest neighbors considered as edges
+
+model_path: ZM9624_github/model/  # Path to save or load model weights
+code_dir: Matching_anchor         # Path to the Matching_anchor code directory
