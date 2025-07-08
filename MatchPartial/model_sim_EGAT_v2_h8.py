@@ -346,8 +346,6 @@ class NodeLevelGNN(torch.nn.Module):
         self.mp1 = MessagePassing(11, out_dim1, device)
         self.mp2 = MessagePassing(11, out_dim2, device)
         embedding_size = 11
-        # self.deepwalk = DeepWalk_deterministic(window_size=5, embedding_size=embedding_size, walk_length=10, walks_per_node=20) ##walks_per_node can't be 1
-        # self.deepwalk = DeepWalk(window_size=5, embedding_size=embedding_size, walk_length=10, walks_per_node=20) ##walks_per_node can't be 1
         self.mp3 = MessagePassing(embedding_size, out_dim2, device)
 
 
@@ -362,10 +360,7 @@ class NodeLevelGNN(torch.nn.Module):
 
         
         self.encoder = DGCNN(hidden_channels=64, num_layers=5, num_features=out_dim1, GNN=GATConv, conv1d_channels = [16,32],  use_edge_attr = False, k=0)
-        # self.encoder2 = DGCNN(hidden_channels=8, num_layers=3, num_features=out_dim2, GNN=GATConv, conv1d_channels = [16,64],  use_edge_attr = True, k=0)
         self.encoder2 =  DGCNNedge(hidden_channels=8, num_layers=5, num_features=out_dim1, edge_feat_dim=4, conv1d_channels = [16,64], k=0, num_heads=8)
-        # self.encoder3 = DGCNN(hidden_channels=2, num_layers=1, num_features=16, GNN=GATConv, conv1d_channels = [16,64],  use_edge_attr = True, k=0)
-        # self.encoder3 =  DGCNNedge(hidden_channels=2, num_layers=1, num_features=16, edge_feat_dim=4, conv1d_channels = [16,64], k=0, num_heads=1)
 
 
         self.sageconv1 = SAGEConv(11,16)
@@ -373,14 +368,7 @@ class NodeLevelGNN(torch.nn.Module):
 
         self.mlpx = MLPx(in_channels= 22, out_channels=16)
         self.edge_conv = EdgeConv(self.mlpx, aggr='max')       
-     
-        
-        # self.bilinear_layer = nn.Bilinear(64, 64, 64) ## for bilinear layer not stable, loss explodes
         self.mlp = MLP([1, 64, 1], dropout=1e-10, norm=None)
-        # self.mlp2 = MLP([1, 80, 1], dropout=1e-10, norm=None)
-
-
-        # self.m = ConvNet()
         self.m = LinearNet()
 
         self.with_AM = with_AM
@@ -456,7 +444,7 @@ class NodeLevelGNN(torch.nn.Module):
             # nearest_indices, distance_matrix = self.search_nearby_indices(coord,coords2,self.nearby_search_num, tolerance, beta, self.norm_scale[1:], self.device)
 
         
-        ## Method 2: deformation registration on the head area and apply the transformation to the whole
+        ## Method 3: deformation registration on the head area and apply the transformation to the whole
         # if method ==3:
         #     # print("method 3 is used")
         #     [tolerance, beta] = [1e-5, 1]
@@ -520,21 +508,13 @@ class NodeLevelGNN(torch.nn.Module):
         pred2 = self.each_graph(self.cat_degree(data2), data2.edge_index, data2.edge_attr[:,0:4]) 
 
         
-        
-        # AM_mask1 = self.get_AM_mask(data1,data2,self.with_AM,1)
-        # # AM_mask2 = self.get_AM_mask(data2,data1,self.with_AM,1)
-        # # AM_mask0 = AM_mask1 * AM_mask2.T
-
-        
+          
         AM_mask1 = self.get_AM_mask(data1,data2,self.with_AM,method)
         AM_mask2 = self.get_AM_mask(data2,data1,self.with_AM,method)
         AM_mask = AM_mask1 * AM_mask2.T
 
         
-        # # AM_mask = (AM_mask0 + AM_mask00) >0
-        # AM_mask = (AM_mask1 + AM_mask2) > 0
 
-        
         # if train_val != 'train': 
         # AM_mask = self.get_AM_mask(data1,data2,self.with_AM,2)
         AM_mask[data1.y==0] = 0   ## when in evaluation, use this
