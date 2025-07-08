@@ -40,7 +40,7 @@ from .parameters import method, train_val
 import dgl
 
 from dgl.nn import EGATConv #https://www.dgl.ai/dgl_docs/generated/dgl.nn.pytorch.conv.EGATConv.html#dgl.nn.pytorch.conv.EGATConv
-from dgl.nn import EdgeGATConv #https://www.dgl.ai/dgl_docs/generated/dgl.nn.pytorch.conv.EdgeGATConv.html
+
 
 
 def deformable_registration(X,Y, tolerance, beta, device):
